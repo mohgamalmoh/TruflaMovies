@@ -1,6 +1,5 @@
 /vendor
 /public/storage
-/bootstrap
 .history/
 /.idea
 .env
