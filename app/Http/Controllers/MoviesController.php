@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
 
 class MoviesController extends Controller
 {
@@ -29,18 +30,18 @@ class MoviesController extends Controller
 
         }
         //echo '100';
-        /*$response = new \stdClass();
+        $response = new \stdClass();
         $response->status = new \stdClass();
         $response->status->message = 'success';
         $response->status->status = true;
-        $response->status->code = 200;*/
+        $response->status->code = 200;
 
-        /*return Response::json(array(
-            'code'      =>  404,
-            'message'   =>  '$message'
-        ), 404);*/
+        return Response::json(array(
+            'code'      =>  200,
+            'message'   =>  'success'
+        ), 200);
 
-        //return true;
+        //return $response;
     }
 
     public function fetchLatest(){
