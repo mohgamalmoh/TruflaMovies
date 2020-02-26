@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Genre;
 use App\Movie;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class MoviesController extends Controller
 {
@@ -14,28 +16,67 @@ class MoviesController extends Controller
 
     public function fetchTopRatedPage()
     {
-        $num_of_records = env("NUM_OF_RECORDS",100);
+        $start_page = 1; //var
+        $num_of_records = (int) env("NUM_OF_RECORDS",40);
         $pages_count = ceil($num_of_records / 20); //getting the number of pages that we should fetch, as each page contains 20 items
-        $start_page = 1;
-        $end_page = $start_page + $pages_count - 1;
+        $end_page = (int) ($start_page + $pages_count - 1);
 
-        //for($i=$start_page ; $i <= $end_page ; $i++){
-            $response  = Movie::fetchPage(1);
+        for($i=$start_page ; $i <= $end_page ; $i++){
+            $response  = Movie::fetchTopRatedPage($i);
+            foreach ($response["results"] as $movie) {
+                Movie::saveJSONMovie($movie);
+            }
 
-            //return $response["results"][1]["original_title"];
-        //}
+        }
+        //echo '100';
+        /*$response = new \stdClass();
+        $response->status = new \stdClass();
+        $response->status->message = 'success';
+        $response->status->status = true;
+        $response->status->code = 200;*/
 
+        /*return Response::json(array(
+            'code'      =>  404,
+            'message'   =>  '$message'
+        ), 404);*/
+
+        //return true;
     }
 
+    public function fetchLatest(){
+        $movie =  Movie::fetchLatest();
+        Movie::saveJSONMovie($movie);
+        return '200';
+    }
+
+    public function saveGenres(){
+        return Genre::fetchAndSave();
+    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listMovies()
     {
-        //
+        dd(45);
+        $inputs = Input::all();
+        $movies = new Movie();
+
+       /* if(isset($inputs['genre_id']) && $inputs['genre_id'] != ''){
+            $movies->whereHas('genres', function ($query) use ($inputs) {
+                $query->where('id', $inputs['genre_id']);
+            });
+        }
+
+        if(isset($inputs['title']) && $inputs['title'] != ''){
+            $movies->where('title',  $inputs['title'] );
+        }*/
+
+        $movies->where('id','5');
+        $result = $movies->get();
+        return $result;
     }
 
     /**

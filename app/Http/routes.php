@@ -11,8 +11,14 @@
 |
 */
 
-Route::get('/top', "MoviesController@getTopRated");
+Route::get('/top', "MoviesController@fetchTopRatedPage");
+Route::get('/saveGenres', "MoviesController@saveGenres");
+Route::get('/latest', "MoviesController@fetchLatest");
+Route::get('/list-movies', "MoviesController@listMovies");
 
+Route::get('/e', function () {
+    dd(14245);
+});
 
 Route::get('/', function () {
     return view('welcome');
