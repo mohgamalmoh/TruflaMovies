@@ -12,7 +12,7 @@
 */
 
 Route::get('/top', "MoviesController@fetchTopRatedPage");
-Route::get('/saveGenres', "MoviesController@saveGenres");
+//Route::get('/saveGenres', "MoviesController@saveGenres");
 Route::get('/latest', "MoviesController@fetchLatest");
 Route::get('/list-movies', "MoviesController@listMovies");
 

@@ -9,7 +9,7 @@ class Genre extends Model
 {
     protected $table = 'genres';
     public $timestamps = false;
-
+    protected $hidden = array('pivot');
     public function genres()
     {
         return $this->belongsToMany(Movie::class, 'movies_genres');

@@ -17,7 +17,17 @@ class MoviesController extends Controller
 
     public function fetchTopRatedPage()
     {
-        $start_page = 1; //var
+        $last_page = Movie::max('page');
+        $start_page = isset($last_page) ? ((int) $last_page+1) : 1;
+        if($start_page > 347){
+            $response = new \stdClass();
+            $response->status = new \stdClass();
+            $response->status->message = 'the end';
+            $response->status->status = true;
+            $response->status->code = 200;
+            return Response::json($response, 200);
+        }
+        //dd($start_page);
         $num_of_records = (int) env("NUM_OF_RECORDS",40);
         $pages_count = ceil($num_of_records / 20); //getting the number of pages that we should fetch, as each page contains 20 items
         $end_page = (int) ($start_page + $pages_count - 1);
@@ -25,7 +35,7 @@ class MoviesController extends Controller
         for($i=$start_page ; $i <= $end_page ; $i++){
             $response  = Movie::fetchTopRatedPage($i);
             foreach ($response["results"] as $movie) {
-                Movie::saveJSONMovie($movie);
+                Movie::saveJSONMovie($movie,$i,'top');
             }
 
         }
@@ -35,19 +45,21 @@ class MoviesController extends Controller
         $response->status->message = 'success';
         $response->status->status = true;
         $response->status->code = 200;
-
-        return Response::json(array(
-            'code'      =>  200,
-            'message'   =>  'success'
-        ), 200);
+        return Response::json($response, 200);
 
         //return $response;
     }
 
     public function fetchLatest(){
         $movie =  Movie::fetchLatest();
-        Movie::saveJSONMovie($movie);
-        return '200';
+        Movie::saveJSONMovie($movie,null,'latest');
+
+        $response = new \stdClass();
+        $response->status = new \stdClass();
+        $response->status->message = 'success';
+        $response->status->status = true;
+        $response->status->code = 200;
+        return Response::json($response, 200);
     }
 
     public function saveGenres(){
@@ -61,22 +73,24 @@ class MoviesController extends Controller
      */
     public function listMovies()
     {
-        dd(45);
         $inputs = Input::all();
-        $movies = new Movie();
+        $result = Movie::listMovies($inputs);
 
-       /* if(isset($inputs['genre_id']) && $inputs['genre_id'] != ''){
-            $movies->whereHas('genres', function ($query) use ($inputs) {
-                $query->where('id', $inputs['genre_id']);
-            });
+        if(count($result) > 0){
+            $response['status'] = new \stdClass();
+            $response['status']->message = 'success';
+            $response['status']->status = true;
+            $response['status']->code = 200;
+            $response['data'] = $result;
+            return Response::json($response, 200);
+        }else{
+            $response['status'] = new \stdClass();
+            $response['status']->message = 'no data';
+            $response['status']->code = 204;
+            $response['data'] = $result;
+            return Response::json($response, 204);
         }
 
-        if(isset($inputs['title']) && $inputs['title'] != ''){
-            $movies->where('title',  $inputs['title'] );
-        }*/
-
-        $movies->where('id','5');
-        $result = $movies->get();
         return $result;
     }
 
