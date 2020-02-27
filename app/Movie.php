@@ -9,7 +9,7 @@ class Movie extends Model
 {
     protected $table = 'movies';
     public $timestamps = false;
-
+    protected $fillable = ['tmdb_id', 'popularity', 'vote_average', 'title', 'release_date', 'page', 'created_at'];
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'movies_genres','movie_id','genre_id');
@@ -37,15 +37,24 @@ class Movie extends Model
 
     static function saveJSONMovie($json_movie,$page=null,$type){
 
-        $movie = new Movie();
-        $movie->tmdb_id = $json_movie['id'];
+        $movie = self::updateOrCreate(
+            ['tmdb_id' => $json_movie['id']],
+            [
+                'popularity' => $json_movie['popularity'],
+                'vote_average' => $json_movie['vote_average'],
+                'title' => $json_movie['original_title'],
+                'release_date' => $json_movie['release_date'],
+                'page' => $page,
+                'created_at' => Carbon::now()->toDateTimeString()
+            ]);
+       /* $movie->tmdb_id = $json_movie['id'];
         $movie->popularity = $json_movie['popularity'];
         $movie->vote_average = $json_movie['vote_average'];
         $movie->title = $json_movie['original_title'];
         $movie->release_date = $json_movie['release_date'];
         $movie->page = $page;
         $movie->created_at = Carbon::now()->toDateTimeString();
-        $movie->save();
+        $movie->save();*/
 
         if($type == 'top'){
             foreach ($json_movie['genre_ids'] as $value){

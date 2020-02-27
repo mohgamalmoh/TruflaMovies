@@ -15,7 +15,7 @@ class MoviesController extends Controller
 {
 
 
-    public function fetchTopRatedPage()
+   /* public function fetchTopRatedPage()
     {
         $last_page = Movie::max('page');
         $start_page = isset($last_page) ? ((int) $last_page+1) : 1;
@@ -48,9 +48,9 @@ class MoviesController extends Controller
         return Response::json($response, 200);
 
         //return $response;
-    }
+    }*/
 
-    public function fetchLatest(){
+    /*public function fetchLatest(){
         $movie =  Movie::fetchLatest();
         Movie::saveJSONMovie($movie,null,'latest');
 
@@ -60,7 +60,7 @@ class MoviesController extends Controller
         $response->status->status = true;
         $response->status->code = 200;
         return Response::json($response, 200);
-    }
+    }*/
 
     public function saveGenres(){
         return Genre::fetchAndSave();
