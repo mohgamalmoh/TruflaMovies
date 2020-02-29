@@ -1,6 +1,6 @@
 ## Tufla Movies
-this is the simple app that seeds its data from TMDB , update the .env file<br/><br/>
-with your auth key and local database credentials
+this is the simple app that seeds its data from TMDB , update the .env file<br/>
+with your auth key and local database credentials<br/>
 1-we can list our movies list in the database using this URL : {domain}/list-movies
 the result set could be filtered using these parameters: <br/><br/>
   a- ?genre_id={integer value represinting a genre id}<br/><br/>
