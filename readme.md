@@ -10,15 +10,15 @@ the result set could be filtered using these parameters: <br/><br/>
   e- ?sortByRate=asc , this will sort the result set in ascending order<br/><br/>
   f- ?sortByRate=desc , this will sort the result set in descending order
   and of course a mix of the above filters could be used.<br/><br/>
-  g- the job that is responsible for feeding the database with the top rated movies list
+2- the job that is responsible for feeding the database with the top rated movies list
      could be executed by the command "php artisan feed_top_movies"<br/><br/>
-  h- the job that is responsible for feeding the database with the latest movie
+3- the job that is responsible for feeding the database with the latest movie
         could be executed by the command "php artisan feed_latest_movie"<br/><br/>
-  i- if you want to automate the database feeding process you must make a new cron entry 
+4- if you want to automate the database feeding process you must make a new cron entry 
      to the server like this one '* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1'
      , this will call the laravel scheduler every minute and laravel will run 
     the tasks that are due.<br/><br/>
-  j- i uploaded the whole project without putting anything in the .gitignore file
+5- i uploaded the whole project without putting anything in the .gitignore file
      to avoid any configuration issue when you clone it, you need to just clone and run.<br/><br/>
-  k- this repo will be updated with docker and docker-compose files to make it easy
+6- this repo will be updated with docker and docker-compose files to make it easy
      to run what is inside.<br/><br/>
