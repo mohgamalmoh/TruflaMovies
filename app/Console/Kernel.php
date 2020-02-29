@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('feed_top_movies')->at();
-        $schedule->command('feed_latest_movie')->hourly();
+        $schedule->command('feed_top_movies')->cron('0 */'.env('INTERVAL_HOURS',2).' * * *');
+        $schedule->command('feed_latest_movie')->cron('0 */'.env('INTERVAL_HOURS',2).' * * *');
     }
 }
