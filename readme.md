@@ -1,5 +1,6 @@
 ## Tufla Movies
-this is the simple app that seeds its data from TMDB <br/>
+this is the simple app that seeds its data from TMDB , update the .env file<br/><br/>
+with your auth key and local database credentials
 1-we can list our movies list in the database using this URL : {domain}/list-movies
 the result set could be filtered using these parameters: <br/><br/>
   a- ?genre_id={integer value represinting a genre id}<br/><br/>
@@ -18,6 +19,6 @@ the result set could be filtered using these parameters: <br/><br/>
      , this will call the laravel scheduler every minute and laravel will run 
     the tasks that are due.<br/><br/>
   j- i uploaded the whole project without putting anything in the .gitignore file
-     to avoid any configuration issue when you clone it, you need to just clone and run.<br/>
+     to avoid any configuration issue when you clone it, you need to just clone and run.<br/><br/>
   k- this repo will be updated with docker and docker-compose files to make it easy
      to run what is inside.<br/><br/>
